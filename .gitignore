@@ -1,2 +1,4 @@
 .git-credentials
 *.log
+__pycache__/
+*.pyc

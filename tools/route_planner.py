@@ -9,9 +9,9 @@ from .poi_search import POISearch
 from .config import config
 
 VEHICLE_TYPES = {
-    "motorcycle": {"name": "摩托车", "icon": "🏍️", "color": "#1890ff"},
-    "bicycle": {"name": "自行车", "icon": "🚴", "color": "#52c41a"},
-    "walking": {"name": "步行", "icon": "🚶", "color": "#faad14"}
+    "motorcycle": {"name": "摩托车/汽车", "icon": "🏍️ 🚗", "color": "#3b82f6"},
+    "bicycle": {"name": "自行车", "icon": "🚴", "color": "#10b981"},
+    "walking": {"name": "步行", "icon": "🚶", "color": "#8b5cf6"}
 }
 
 class RoutePlanner:

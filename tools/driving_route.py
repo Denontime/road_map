@@ -6,7 +6,7 @@ class DrivingRoute:
         self.api_key = api_key
         self.base_url = "https://restapi.amap.com/v3/direction/driving"
 
-    def plan(self, origin: str, destination: str, strategy: int = 0) -> Optional[Dict[str, Any]]:
+    def plan(self, origin: str, destination: str, strategy: int = 10) -> Optional[Dict[str, Any]]:
         params = {
             "key": self.api_key,
             "origin": origin,
@@ -46,6 +46,6 @@ class DrivingRoute:
 
         return {
             "distance": int(path.get("distance", 0)),
-            "duration": int(path.get("time", 0)),
+            "duration": int(path.get("duration", 0)),
             "steps": parsed_steps
         }
