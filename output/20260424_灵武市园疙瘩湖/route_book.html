@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>摩托车路书 - 灵武市园疙瘩湖</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f0f2f5; padding: 20px; line-height: 1.6; }
+        .container { max-width: 1000px; margin: 0 auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        h1 { text-align: center; color: #1a1a1a; margin-bottom: 30px; }
+        .route-info { background: #f7f9fa; padding: 20px; border-radius: 8px; border-left: 4px solid #1890ff; margin: 20px 0; }
+        .route-info p { margin: 8px 0; font-size: 16px; }
+        .vehicle-badge { display: inline-block; background: #1890ff; color: white; padding: 4px 12px; border-radius: 4px; font-size: 14px; margin-left: 10px; }
+        .map-section { margin: 30px 0; }
+        .map-section h2 { color: #1a1a1a; margin: 20px 0 15px; font-size: 20px; }
+        .map-container { width: 100%; max-width: 800px; margin: 0 auto; border-radius: 8px; overflow: hidden; border: 1px solid #e8e8e8; }
+        .map-container img { width: 100%; height: auto; display: block; }
+        .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin: 20px 0; }
+        .stat-box { background: linear-gradient(135deg, #fff7e6, #fff4e0); padding: 15px; border-radius: 8px; text-align: center; border: 1px solid #ffd591; }
+        .stat-value { font-size: 24px; font-weight: bold; color: #d46b08; }
+        .stat-label { font-size: 14px; color: #666; }
+        .steps { margin: 20px 0; max-height: 400px; overflow-y: auto; }
+        .step { padding: 15px; margin: 10px 0; background: #fafafa; border-radius: 6px; border-left: 4px solid #1890ff; }
+        .step-num { display: inline-block; width: 28px; height: 28px; background: #1890ff; color: white; border-radius: 50%; text-align: center; line-height: 28px; font-weight: bold; margin-right: 10px; }
+        .step-road { color: #1890ff; font-weight: 500; }
+        .open-app { display: inline-block; margin: 15px 0; padding: 12px 24px; background: #1890ff; color: white; text-decoration: none; border-radius: 6px; font-weight: bold; }
+        .open-app:hover { opacity: 0.9; }
+        .return-route { margin-top: 40px; padding-top: 30px; border-top: 2px solid #e8e8e8; }
+        .tips { background: #f6ffed; padding: 15px; border-radius: 6px; border: 1px solid #b7eb8f; margin-top: 20px; }
+        .tips h4 { color: #52c41a; margin-bottom: 10px; }
+        .tips ul { margin-left: 20px; color: #666; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏍️ 摩托车路书</h1>
+
+        <div class="route-info">
+            <p><strong>起点：</strong>宁夏回族自治区银川市兴庆区吾悦广场(银川店)</p>
+            <p><strong>终点：</strong>宁夏回族自治区银川市灵武市园疙瘩湖</p>
+            <p><strong>途经点：</strong>宁夏回族自治区银川市灵武市宁东镇鸭子荡水库</p>
+            <p><strong>生成时间：</strong>2026-04-24</p>
+        </div>
+
+        <div class="map-section">
+            <h2>📍 去程路线</h2>
+            <div class="map-container">
+                <img src="https://restapi.amap.com/v3/staticmap?key=9a108c93d1590cf87f1a289648f30db3&center=106.44110850000001,38.249145999999996&zoom=8&size=800*450&markers=106.319759,38.470402,S&markers=106.562458,38.027890,S"
+                     alt="去程路线图"
+                     onerror="this.style.display='none'">
+            </div>
+            <a href="https://uri.amap.com/marker?position=106.319759,38.470402,宁夏回族自治区银川市兴庆区吾悦广场(银川店)&position=106.562458,38.027890,宁夏回族自治区银川市灵武市园疙瘩湖&src=motobike&callnative=1"
+               class="open-app" target="_blank">📱 在高德地图中查看</a>
+        </div>
+
+        <div class="stats">
+            <div class="stat-box">
+                <div class="stat-value">80.4 km</div>
+                <div class="stat-label">总距离</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value">0 min</div>
+                <div class="stat-label">预计时间</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value">4021 cal</div>
+                <div class="stat-label">预计消耗</div>
+            </div>
+        </div>
+
+        <div class="steps">
+            <h3>🛣️ 去程路线详情</h3>
+            
+            <div class="step">
+                <span class="step-num">1</span>
+                <span class="step-instruction">向东北行驶233米左转</span>
+                <p class="step-detail">📏 233 米 | 🛤️ <span class="step-road"></span> | ⏱️ 0 分钟</p>
+            </div>
+            <div class="step">
+                <span class="step-num">2</span>
+                <span class="step-instruction">向北行驶20米右转</span>
+                <p class="step-detail">📏 20 米 | 🛤️ <span class="step-road"></span> | ⏱️ 0 分钟</p>
+            </div>
+            <div class="step">
+                <span class="step-num">3</span>
+                <span class="step-instruction">沿悦友巷向东行驶171米右转</span>
+                <p class="step-detail">📏 171 米 | 🛤️ <span class="step-road">悦友巷</span> | ⏱️ 0 分钟</p>
+            </div>
+            <div class="step">
+                <span class="step-num">4</span>
+                <span class="step-instruction">向西南行驶408米左转</span>
+                <p class="step-detail">📏 408 米 | 🛤️ <span class="step-road"></span> | ⏱️ 0 分钟</p>
+            </div>
+            <div class="step">
+                <span class="step-num">5</span>
+                <span class="step-instruction">沿北京东路途径北京路向东行驶2.9千米向右前方行驶进入匝道</span>
+                <p class="step-detail">📏 2854 米 | 🛤️ <span class="step-road">北京东路</span> | ⏱️ 0 分钟</p>
+            </div>
+            <div class="step">
+                <span class="step-num">6</span>
+                <span class="step-instruction">沿G6京藏高速入口向东行驶905米减速行驶到达收费站</span>
+                <p class="step-detail">📏 905 米 | 🛤️ <span class="step-road">G6京藏高速入口</span> | ⏱️ 0 分钟</p>
+            </div>
+            <div class="step">
+                <span class="step-num">7</span>
+                <span class="step-instruction">沿G6京藏高速入口向东北行驶254米靠右</span>
+                <p class="step-detail">📏 254 米 | 🛤️ <span class="step-road">G6京藏高速入口</span> | ⏱️ 0 分钟</p>
+            </div>
+            <div class="step">
+                <span class="step-num">8</span>
+                <span class="step-instruction">沿G6京藏高速入口途径G6京藏高速向南行驶7.0千米向右前方行驶进入匝道</span>
+                <p class="step-detail">📏 7037 米 | 🛤️ <span class="step-road">G6京藏高速入口</span> | ⏱️ 0 分钟</p>
+            </div>
+            <div class="step">
+                <span class="step-num">9</span>
+                <span class="step-instruction">沿掌政枢纽向西南行驶257米靠左</span>
+                <p class="step-detail">📏 257 米 | 🛤️ <span class="step-road">掌政枢纽</span> | ⏱️ 0 分钟</p>
+            </div>
+            <div class="step">
+                <span class="step-num">10</span>
+                <span class="step-instruction">沿掌政枢纽途径G20青银高速、银川黄河大桥向东南行驶9.1千米靠左沿主路行驶</span>
+                <p class="step-detail">📏 9060 米 | 🛤️ <span class="step-road">掌政枢纽</span> | ⏱️ 0 分钟</p>
+            </div>
+            <div class="step">
+                <span class="step-num">11</span>
+                <span class="step-instruction">沿G20青银高速向东南行驶25.7千米向右前方行驶进入匝道</span>
+                <p class="step-detail">📏 25654 米 | 🛤️ <span class="step-road">G20青银高速</span> | ⏱️ 0 分钟</p>
+            </div>
+            <div class="step">
+                <span class="step-num">12</span>
+                <span class="step-instruction">沿宁东互通式立交桥向南行驶601米减速行驶到达收费站</span>
+                <p class="step-detail">📏 601 米 | 🛤️ <span class="step-road">宁东互通式立交桥</span> | ⏱️ 0 分钟</p>
+            </div>
+            <div class="step">
+                <span class="step-num">13</span>
+                <span class="step-instruction">沿宁东互通式立交桥向西南行驶147米向右前方行驶进入右转专用道</span>
+                <p class="step-detail">📏 147 米 | 🛤️ <span class="step-road">宁东互通式立交桥</span> | ⏱️ 0 分钟</p>
+            </div>
+            <div class="step">
+                <span class="step-num">14</span>
+                <span class="step-instruction">沿银州大道向西行驶58米右转</span>
+                <p class="step-detail">📏 58 米 | 🛤️ <span class="step-road">银州大道</span> | ⏱️ 0 分钟</p>
+            </div>
+            <div class="step">
+                <span class="step-num">15</span>
+                <span class="step-instruction">沿银州大道向西北行驶162米向左前方行驶</span>
+                <p class="step-detail">📏 162 米 | 🛤️ <span class="step-road">银州大道</span> | ⏱️ 0 分钟</p>
+            </div>
+            <div class="step">
+                <span class="step-num">16</span>
+                <span class="step-instruction">沿马跑泉路向西南行驶1.8千米右转</span>
+                <p class="step-detail">📏 1766 米 | 🛤️ <span class="step-road">马跑泉路</span> | ⏱️ 0 分钟</p>
+            </div>
+            <div class="step">
+                <span class="step-num">17</span>
+                <span class="step-instruction">沿长城路向西行驶792米左转</span>
+                <p class="step-detail">📏 792 米 | 🛤️ <span class="step-road">长城路</span> | ⏱️ 0 分钟</p>
+            </div>
+            <div class="step">
+                <span class="step-num">18</span>
+                <span class="step-instruction">沿雄州路向南行驶1.1千米右转</span>
+                <p class="step-detail">📏 1069 米 | 🛤️ <span class="step-road">雄州路</span> | ⏱️ 0 分钟</p>
+            </div>
+            <div class="step">
+                <span class="step-num">19</span>
+                <span class="step-instruction">沿长征路向西行驶604米左转</span>
+                <p class="step-detail">📏 604 米 | 🛤️ <span class="step-road">长征路</span> | ⏱️ 0 分钟</p>
+            </div>
+            <div class="step">
+                <span class="step-num">20</span>
+                <span class="step-instruction">沿任家庄街向南行驶228米右转</span>
+                <p class="step-detail">📏 228 米 | 🛤️ <span class="step-road">任家庄街</span> | ⏱️ 0 分钟</p>
+            </div>
+            <div class="step">
+                <span class="step-num">21</span>
+                <span class="step-instruction">向西行驶1.4千米右转</span>
+                <p class="step-detail">📏 1436 米 | 🛤️ <span class="step-road"></span> | ⏱️ 0 分钟</p>
+            </div>
+            <div class="step">
+                <span class="step-num">22</span>
+                <span class="step-instruction">向东北行驶84米到达目的地</span>
+                <p class="step-detail">📏 84 米 | 🛤️ <span class="step-road"></span> | ⏱️ 0 分钟</p>
+            </div>
+            <div class="step">
+                <span class="step-num">23</span>
+                <span class="step-instruction">向西南行驶84米左转</span>
+                <p class="step-detail">📏 84 米 | 🛤️ <span class="step-road"></span> | ⏱️ 0 分钟</p>
+            </div>
+            <div class="step">
+                <span class="step-num">24</span>
+                <span class="step-instruction">向东行驶1.4千米右转</span>
+                <p class="step-detail">📏 1436 米 | 🛤️ <span class="step-road"></span> | ⏱️ 0 分钟</p>
+            </div>
+            <div class="step">
+                <span class="step-num">25</span>
+                <span class="step-instruction">沿任家庄街向南行驶1.8千米左转</span>
+                <p class="step-detail">📏 1829 米 | 🛤️ <span class="step-road">任家庄街</span> | ⏱️ 0 分钟</p>
+            </div>
+            <div class="step">
+                <span class="step-num">26</span>
+                <span class="step-instruction">沿307国道向东行驶5.6千米向右前方行驶进入右转专用道</span>
+                <p class="step-detail">📏 5573 米 | 🛤️ <span class="step-road">307国道</span> | ⏱️ 0 分钟</p>
+            </div>
+            <div class="step">
+                <span class="step-num">27</span>
+                <span class="step-instruction">沿朔州路向东南行驶40米右转</span>
+                <p class="step-detail">📏 40 米 | 🛤️ <span class="step-road">朔州路</span> | ⏱️ 0 分钟</p>
+            </div>
+            <div class="step">
+                <span class="step-num">28</span>
+                <span class="step-instruction">沿朔州路向南行驶13.0千米右转</span>
+                <p class="step-detail">📏 13046 米 | 🛤️ <span class="step-road">朔州路</span> | ⏱️ 0 分钟</p>
+            </div>
+            <div class="step">
+                <span class="step-num">29</span>
+                <span class="step-instruction">向西南行驶1.2千米左转</span>
+                <p class="step-detail">📏 1159 米 | 🛤️ <span class="step-road"></span> | ⏱️ 0 分钟</p>
+            </div>
+            <div class="step">
+                <span class="step-num">30</span>
+                <span class="step-instruction">向西行驶64米右转</span>
+                <p class="step-detail">📏 64 米 | 🛤️ <span class="step-road"></span> | ⏱️ 0 分钟</p>
+            </div>
+            <div class="step">
+                <span class="step-num">31</span>
+                <span class="step-instruction">向西北行驶3.4千米到达目的地</span>
+                <p class="step-detail">📏 3402 米 | 🛤️ <span class="step-road"></span> | ⏱️ 0 分钟</p>
+            </div>
+        </div>
+
+        <div class='return-route'>
+        
+        <div class="return-route">
+            <div class="map-section">
+                <h2>📍 返程路线</h2>
+                <div class="map-container">
+                    <img src="https://restapi.amap.com/v3/staticmap?key={self.api_key}&center={self._get_center_lnglat(origin, destination)}&zoom=8&size=800*450&markers={destination['location']},S&markers={waypoints[0]['location'] if waypoints else origin['location']},S&markers={origin['location']},S"
+                         alt="返程路线图"
+                         onerror="this.style.display='none'">
+                </div>
+            </div>
+            <div class="steps">
+                <h3>🛣️ 返程路线详情</h3>
+                
+            <div class="step">
+                <span class="step-num">1</span>
+                <span class="step-instruction">向东行驶603米向右前方行驶</span>
+                <p class="step-detail">📏 603 米 | 🛤️ <span class="step-road"></span> | ⏱️ 0 分钟</p>
+            </div>
+            <div class="step">
+                <span class="step-num">2</span>
+                <span class="step-instruction">向东南行驶2.8千米左转</span>
+                <p class="step-detail">📏 2799 米 | 🛤️ <span class="step-road"></span> | ⏱️ 0 分钟</p>
+            </div>
+            <div class="step">
+                <span class="step-num">3</span>
+                <span class="step-instruction">向东行驶64米右转</span>
+                <p class="step-detail">📏 64 米 | 🛤️ <span class="step-road"></span> | ⏱️ 0 分钟</p>
+            </div>
+            <div class="step">
+                <span class="step-num">4</span>
+                <span class="step-instruction">向东北行驶1.2千米左转</span>
+                <p class="step-detail">📏 1159 米 | 🛤️ <span class="step-road"></span> | ⏱️ 0 分钟</p>
+            </div>
+            <div class="step">
+                <span class="step-num">5</span>
+                <span class="step-instruction">沿朔州路向北行驶13.1千米左转</span>
+                <p class="step-detail">📏 13073 米 | 🛤️ <span class="step-road">朔州路</span> | ⏱️ 0 分钟</p>
+            </div>
+            <div class="step">
+                <span class="step-num">6</span>
+                <span class="step-instruction">沿307国道向西行驶5.5千米右转</span>
+                <p class="step-detail">📏 5510 米 | 🛤️ <span class="step-road">307国道</span> | ⏱️ 0 分钟</p>
+            </div>
+            <div class="step">
+                <span class="step-num">7</span>
+                <span class="step-instruction">沿任家庄街向北行驶1.8千米左转</span>
+                <p class="step-detail">📏 1829 米 | 🛤️ <span class="step-road">任家庄街</span> | ⏱️ 0 分钟</p>
+            </div>
+            <div class="step">
+                <span class="step-num">8</span>
+                <span class="step-instruction">向西行驶1.4千米右转</span>
+                <p class="step-detail">📏 1436 米 | 🛤️ <span class="step-road"></span> | ⏱️ 0 分钟</p>
+            </div>
+            <div class="step">
+                <span class="step-num">9</span>
+                <span class="step-instruction">向东北行驶84米到达目的地</span>
+                <p class="step-detail">📏 84 米 | 🛤️ <span class="step-road"></span> | ⏱️ 0 分钟</p>
+            </div>
+            <div class="step">
+                <span class="step-num">10</span>
+                <span class="step-instruction">向西南行驶84米左转</span>
+                <p class="step-detail">📏 84 米 | 🛤️ <span class="step-road"></span> | ⏱️ 0 分钟</p>
+            </div>
+            <div class="step">
+                <span class="step-num">11</span>
+                <span class="step-instruction">向东行驶1.4千米左转</span>
+                <p class="step-detail">📏 1436 米 | 🛤️ <span class="step-road"></span> | ⏱️ 0 分钟</p>
+            </div>
+            <div class="step">
+                <span class="step-num">12</span>
+                <span class="step-instruction">沿任家庄街向北行驶226米右转</span>
+                <p class="step-detail">📏 226 米 | 🛤️ <span class="step-road">任家庄街</span> | ⏱️ 0 分钟</p>
+            </div>
+            <div class="step">
+                <span class="step-num">13</span>
+                <span class="step-instruction">沿长征路向东行驶618米左转</span>
+                <p class="step-detail">📏 618 米 | 🛤️ <span class="step-road">长征路</span> | ⏱️ 0 分钟</p>
+            </div>
+            <div class="step">
+                <span class="step-num">14</span>
+                <span class="step-instruction">沿雄州路向北行驶1.1千米右转</span>
+                <p class="step-detail">📏 1070 米 | 🛤️ <span class="step-road">雄州路</span> | ⏱️ 0 分钟</p>
+            </div>
+            <div class="step">
+                <span class="step-num">15</span>
+                <span class="step-instruction">沿长城路向东行驶801米左转</span>
+                <p class="step-detail">📏 801 米 | 🛤️ <span class="step-road">长城路</span> | ⏱️ 0 分钟</p>
+            </div>
+            <div class="step">
+                <span class="step-num">16</span>
+                <span class="step-instruction">沿马跑泉路向东北行驶1.8千米右转</span>
+                <p class="step-detail">📏 1757 米 | 🛤️ <span class="step-road">马跑泉路</span> | ⏱️ 0 分钟</p>
+            </div>
+            <div class="step">
+                <span class="step-num">17</span>
+                <span class="step-instruction">沿银州大道向东南行驶203米左转</span>
+                <p class="step-detail">📏 203 米 | 🛤️ <span class="step-road">银州大道</span> | ⏱️ 0 分钟</p>
+            </div>
+            <div class="step">
+                <span class="step-num">18</span>
+                <span class="step-instruction">沿宁东互通式立交桥向东北行驶191米减速行驶到达收费站</span>
+                <p class="step-detail">📏 191 米 | 🛤️ <span class="step-road">宁东互通式立交桥</span> | ⏱️ 0 分钟</p>
+            </div>
+            <div class="step">
+                <span class="step-num">19</span>
+                <span class="step-instruction">沿宁东互通式立交桥向东北行驶131米靠左</span>
+                <p class="step-detail">📏 131 米 | 🛤️ <span class="step-road">宁东互通式立交桥</span> | ⏱️ 0 分钟</p>
+            </div>
+            <div class="step">
+                <span class="step-num">20</span>
+                <span class="step-instruction">沿宁东互通式立交桥途径G20青银高速、银川黄河大桥向西北行驶34.2千米向右前方行驶进入匝道</span>
+                <p class="step-detail">📏 34166 米 | 🛤️ <span class="step-road">宁东互通式立交桥</span> | ⏱️ 0 分钟</p>
+            </div>
+            <div class="step">
+                <span class="step-num">21</span>
+                <span class="step-instruction">沿掌政枢纽向西北行驶487米靠右</span>
+                <p class="step-detail">📏 487 米 | 🛤️ <span class="step-road">掌政枢纽</span> | ⏱️ 0 分钟</p>
+            </div>
+            <div class="step">
+                <span class="step-num">22</span>
+                <span class="step-instruction">沿掌政枢纽途径G6京藏高速向北行驶7.2千米向右前方行驶进入匝道</span>
+                <p class="step-detail">📏 7194 米 | 🛤️ <span class="step-road">掌政枢纽</span> | ⏱️ 0 分钟</p>
+            </div>
+            <div class="step">
+                <span class="step-num">23</span>
+                <span class="step-instruction">沿G6京藏高速出口向西北行驶1.1千米减速行驶到达收费站</span>
+                <p class="step-detail">📏 1079 米 | 🛤️ <span class="step-road">G6京藏高速出口</span> | ⏱️ 0 分钟</p>
+            </div>
+            <div class="step">
+                <span class="step-num">24</span>
+                <span class="step-instruction">沿G6京藏高速出口向南行驶191米靠右</span>
+                <p class="step-detail">📏 191 米 | 🛤️ <span class="step-road">G6京藏高速出口</span> | ⏱️ 0 分钟</p>
+            </div>
+            <div class="step">
+                <span class="step-num">25</span>
+                <span class="step-instruction">沿G6京藏高速出口途径北京路、北京东路向西行驶3.7千米右转进入主路</span>
+                <p class="step-detail">📏 3697 米 | 🛤️ <span class="step-road">G6京藏高速出口</span> | ⏱️ 0 分钟</p>
+            </div>
+            <div class="step">
+                <span class="step-num">26</span>
+                <span class="step-instruction">沿友爱街向北行驶426米右转</span>
+                <p class="step-detail">📏 426 米 | 🛤️ <span class="step-road">友爱街</span> | ⏱️ 0 分钟</p>
+            </div>
+            <div class="step">
+                <span class="step-num">27</span>
+                <span class="step-instruction">沿悦友巷向东行驶242米右转</span>
+                <p class="step-detail">📏 242 米 | 🛤️ <span class="step-road">悦友巷</span> | ⏱️ 0 分钟</p>
+            </div>
+            <div class="step">
+                <span class="step-num">28</span>
+                <span class="step-instruction">向南行驶20米右转</span>
+                <p class="step-detail">📏 20 米 | 🛤️ <span class="step-road"></span> | ⏱️ 0 分钟</p>
+            </div>
+            <div class="step">
+                <span class="step-num">29</span>
+                <span class="step-instruction">向西南行驶233米到达目的地</span>
+                <p class="step-detail">📏 233 米 | 🛤️ <span class="step-road"></span> | ⏱️ 0 分钟</p>
+            </div>
+            </div>
+        </div>
+        
+        </div>
+
+        <div class="tips">
+            <h4>💡 摩托车骑行小贴士</h4>
+            <ul>
+                <li>全程约 <strong>80.4 公里</strong>，建议提前检查车辆状况</li>
+                <li>携带足够的饮用水和必要的维修工具</li>
+                <li>注意交通安全，遵守交通规则</li>
+                <li>途中注意休息，避免疲劳驾驶</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
