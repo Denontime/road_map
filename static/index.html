@@ -342,12 +342,20 @@
             </div>
 
             <div class="form-group">
-                <label>途经点（可选）</label>
-                <div id="waypointList"></div>
-                <div class="add-waypoint" id="addWaypoint" onclick="addWaypointField()">
+                <label>去程途经点（可选）</label>
+                <div id="goWaypointList"></div>
+                <div class="add-waypoint" id="addGoWaypoint" onclick="addWaypointField('goWaypointList', 'addGoWaypoint')">
                     + 添加途经点
                 </div>
-                <p class="hint">添加返程途经点，例如：服务区、休息点</p>
+            </div>
+
+            <div class="form-group">
+                <label>返程途经点（可选）</label>
+                <div id="returnWaypointList"></div>
+                <div class="add-waypoint" id="addReturnWaypoint" onclick="addWaypointField('returnWaypointList', 'addReturnWaypoint')">
+                    + 添加途经点
+                </div>
+                <p class="hint">返程经过的地点，例如：服务区、休息点</p>
             </div>
 
             <div class="btn-group">
@@ -405,31 +413,34 @@
             }
         });
 
-        function addWaypointField() {
+        function addWaypointField(listId, btnId) {
             waypointCount++;
-            const container = document.getElementById('waypointList');
+            const container = document.getElementById(listId);
             const row = document.createElement('div');
             row.className = 'waypoint-row';
             row.id = `waypoint-${waypointCount}`;
             row.innerHTML = `
                 <input type="text" id="waypoint-input-${waypointCount}" placeholder="途经点地址">
-                <button type="button" onclick="removeWaypoint(${waypointCount})">×</button>
+                <button type="button" onclick="removeWaypoint(${waypointCount}, '${listId}')">×</button>
             `;
             container.appendChild(row);
         }
 
-        function removeWaypoint(id) {
+        function removeWaypoint(id, listId) {
             const row = document.getElementById(`waypoint-${id}`);
             if (row) row.remove();
         }
 
-        function getWaypoints() {
+        function getWaypoints(listId) {
             const waypoints = [];
-            document.querySelectorAll('.waypoint-row input').forEach(input => {
-                if (input.value.trim()) {
-                    waypoints.push(input.value.trim());
-                }
-            });
+            const container = document.getElementById(listId);
+            if (container) {
+                container.querySelectorAll('.waypoint-row input').forEach(input => {
+                    if (input.value.trim()) {
+                        waypoints.push(input.value.trim());
+                    }
+                });
+            }
             return waypoints;
         }
 
@@ -473,7 +484,8 @@
         async function previewRoute() {
             const origin = document.getElementById('origin').value.trim();
             const destination = document.getElementById('destination').value.trim();
-            const waypoints = getWaypoints();
+            const goWaypoints = getWaypoints('goWaypointList');
+            const returnWaypoints = getWaypoints('returnWaypointList');
             const vehicleType = getSelectedVehicle();
             const strategy = document.getElementById('strategy').value;
 
@@ -489,7 +501,7 @@
                 const response = await fetch(`${API_BASE}/api/route/book/preview`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ origin, destination, waypoints, return_via: waypoints, vehicle_type: vehicleType, strategy: parseInt(strategy) })
+                    body: JSON.stringify({ origin, destination, waypoints: goWaypoints, return_via: returnWaypoints, vehicle_type: vehicleType, strategy: parseInt(strategy) })
                 });
 
                 const result = await response.json();
@@ -511,7 +523,8 @@
         async function generateRouteBook() {
             const origin = document.getElementById('origin').value.trim();
             const destination = document.getElementById('destination').value.trim();
-            const waypoints = getWaypoints();
+            const goWaypoints = getWaypoints('goWaypointList');
+            const returnWaypoints = getWaypoints('returnWaypointList');
             const vehicleType = getSelectedVehicle();
             const strategy = document.getElementById('strategy').value;
 
@@ -526,7 +539,7 @@
                 const response = await fetch(`${API_BASE}/api/route/book`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ origin, destination, waypoints, return_via: waypoints, vehicle_type: vehicleType, strategy: parseInt(strategy) })
+                    body: JSON.stringify({ origin, destination, waypoints: goWaypoints, return_via: returnWaypoints, vehicle_type: vehicleType, strategy: parseInt(strategy) })
                 });
 
                 const result = await response.json();

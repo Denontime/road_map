@@ -118,6 +118,7 @@ class RoutePlanner:
         return None
 
     def generate_route_book_data(self, origin_address: str, destination_address: str,
+                                 waypoints: List[str] = None,
                                  return_via: List[str] = None,
                                  vehicle_type: str = "motorcycle",
                                  strategy: int = 10) -> Dict[str, Any]:
@@ -127,24 +128,32 @@ class RoutePlanner:
         if not origin or not destination:
             return {"error": "无法解析地址坐标"}
 
-        waypoints = []
+        go_waypoints = []
+        if waypoints:
+            for addr in waypoints:
+                wp = self.geocode_address(addr)
+                if wp:
+                    go_waypoints.append(wp)
+
+        return_waypoints = []
         if return_via:
             for addr in return_via:
                 wp = self.geocode_address(addr)
                 if wp:
-                    waypoints.append(wp)
+                    return_waypoints.append(wp)
 
-        go_route = self.plan_route(origin, destination, waypoints if waypoints else None, vehicle_type, strategy)
+        go_route = self.plan_route(origin, destination, go_waypoints if go_waypoints else None, vehicle_type, strategy)
 
         return_route = None
-        if return_via:
-            return_route = self.plan_route(destination, origin, waypoints, vehicle_type, strategy)
+        if return_waypoints:
+            return_route = self.plan_route(destination, origin, return_waypoints, vehicle_type, strategy)
 
         return {
             "created_at": datetime.now().isoformat(),
             "origin": origin,
             "destination": destination,
-            "waypoints": waypoints,
+            "go_waypoints": go_waypoints,
+            "return_waypoints": return_waypoints,
             "go_route": go_route,
             "return_route": return_route,
             "vehicle_type": vehicle_type,
@@ -172,7 +181,8 @@ class RoutePlanner:
     def generate_html(self, route_data: Dict) -> str:
         go = route_data["go_route"]
         return_route = route_data.get("return_route")
-        waypoints = route_data.get("waypoints", [])
+        go_waypoints = route_data.get("go_waypoints", [])
+        return_waypoints = route_data.get("return_waypoints", [])
         vehicle_info = route_data.get("vehicle_info", VEHICLE_TYPES["motorcycle"])
         vehicle_type = route_data.get("vehicle_type", "motorcycle")
 
@@ -185,10 +195,15 @@ class RoutePlanner:
         if return_route:
             return_segments_html = self._generate_segments_html(return_route["segments"])
 
-        waypoints_html = ""
-        if waypoints:
-            waypoints_list = " → ".join([wp.get("formatted_address", wp["address"]) for wp in waypoints])
-            waypoints_html = f'<p><strong>途经点：</strong>{waypoints_list}</p>'
+        go_waypoints_html = ""
+        if go_waypoints:
+            waypoints_list = " → ".join([wp.get("formatted_address", wp["address"]) for wp in go_waypoints])
+            go_waypoints_html = f'<p><strong>去程途经点：</strong>{waypoints_list}</p>'
+
+        return_waypoints_html = ""
+        if return_waypoints:
+            waypoints_list = " → ".join([wp.get("formatted_address", wp["address"]) for wp in return_waypoints])
+            return_waypoints_html = f'<p><strong>返程途经点：</strong>{waypoints_list}</p>'
 
         distance_km = go["total_distance"] / 1000
         duration_minutes = int(go["total_duration"] / 60)
@@ -244,7 +259,8 @@ class RoutePlanner:
         <div class="route-info">
             <p><strong>起点：</strong>{origin.get('formatted_address', origin['address'])}</p>
             <p><strong>终点：</strong>{destination.get('formatted_address', destination['address'])}</p>
-            {waypoints_html}
+            {go_waypoints_html}
+            {return_waypoints_html}
             <p><strong>生成时间：</strong>{route_data['created_at'][:10]}</p>
         </div>
 
@@ -285,7 +301,7 @@ class RoutePlanner:
             <div class="map-section">
                 <h2>📍 返程路线</h2>
                 <div class="map-container">
-                    <img src="https://restapi.amap.com/v3/staticmap?key={{self.api_key}}&center={{self._get_center_lnglat(origin, destination)}}&zoom=8&size=800*450&markers={{destination['location']}},S&markers={{waypoints[0]['location'] if waypoints else origin['location']}},S&markers={{origin['location']}},S"
+                    <img src="https://restapi.amap.com/v3/staticmap?key={self.api_key}&center={self._get_center_lnglat(destination, origin)}&zoom=8&size=800*450&markers={destination['location']},S&markers={return_waypoints[0]['location'] if return_waypoints else origin['location']},S&markers={origin['location']},S"
                          alt="返程路线图"
                          onerror="this.style.display='none'">
                 </div>
