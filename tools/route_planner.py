@@ -37,12 +37,13 @@ class RoutePlanner:
         return None
 
     def plan_route(self, origin: Dict, destination: Dict, waypoints: List[Dict] = None,
-                   vehicle_type: str = "motorcycle") -> Dict[str, Any]:
+                   vehicle_type: str = "motorcycle", strategy: int = 10) -> Dict[str, Any]:
         full_route = {
             "origin": origin,
             "destination": destination,
             "waypoints": waypoints or [],
             "vehicle_type": vehicle_type,
+            "strategy": strategy,
             "segments": [],
             "total_distance": 0,
             "total_duration": 0
@@ -62,7 +63,7 @@ class RoutePlanner:
             elif vehicle_type == "walking":
                 parsed = self._plan_walking(start, end)
             else:
-                route_data = self.driving.plan(start["location"], end["location"])
+                route_data = self.driving.plan(start["location"], end["location"], strategy=strategy)
                 if route_data:
                     parsed = self.driving.parse_route(route_data)
                 else:
@@ -101,15 +102,15 @@ class RoutePlanner:
                     parsed_steps.append({
                         "instruction": step.get("instruction", ""),
                         "road": step.get("road", ""),
-                        "distance": step.get("distance", 0),
-                        "duration": step.get("time", 0),
+                        "distance": int(step.get("distance", 0)),
+                        "duration": int(step.get("duration", 0)),
                         "action": step.get("action", ""),
                         "orientation": step.get("orientation", ""),
                         "polyline": step.get("polyline", "")
                     })
                 return {
-                    "distance": path.get("distance", 0),
-                    "duration": path.get("time", 0),
+                    "distance": int(path.get("distance", 0)),
+                    "duration": int(path.get("duration", 0)),
                     "steps": parsed_steps
                 }
         except Exception as e:
@@ -118,7 +119,8 @@ class RoutePlanner:
 
     def generate_route_book_data(self, origin_address: str, destination_address: str,
                                  return_via: List[str] = None,
-                                 vehicle_type: str = "motorcycle") -> Dict[str, Any]:
+                                 vehicle_type: str = "motorcycle",
+                                 strategy: int = 10) -> Dict[str, Any]:
         origin = self.geocode_address(origin_address)
         destination = self.geocode_address(destination_address)
 
@@ -132,11 +134,11 @@ class RoutePlanner:
                 if wp:
                     waypoints.append(wp)
 
-        go_route = self.plan_route(origin, destination, waypoints if waypoints else None, vehicle_type)
+        go_route = self.plan_route(origin, destination, waypoints if waypoints else None, vehicle_type, strategy)
 
         return_route = None
         if return_via:
-            return_route = self.plan_route(destination, origin, waypoints, vehicle_type)
+            return_route = self.plan_route(destination, origin, waypoints, vehicle_type, strategy)
 
         return {
             "created_at": datetime.now().isoformat(),
@@ -146,6 +148,7 @@ class RoutePlanner:
             "go_route": go_route,
             "return_route": return_route,
             "vehicle_type": vehicle_type,
+            "strategy": strategy,
             "vehicle_info": VEHICLE_TYPES.get(vehicle_type, VEHICLE_TYPES["motorcycle"])
         }
 

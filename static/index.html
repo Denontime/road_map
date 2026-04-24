@@ -326,6 +326,21 @@
                 <p class="hint">选择出行方式</p>
             </div>
 
+            <div class="form-group" id="strategyGroup">
+                <label>路线偏好</label>
+                <select id="strategy" style="width: 100%; padding: 14px 40px 14px 16px; border: 2px solid var(--border-color); border-radius: 8px; font-size: 16px; background: var(--bg-secondary); color: var(--text-primary); cursor: pointer; appearance: none; -webkit-appearance: none; background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2364748b' d='M6 8L1 3h10z'/%3E%3C/svg%3E&quot;); background-repeat: no-repeat; background-position: right 16px center;">
+                    <option value="10">🛣️ 综合最优（默认）</option>
+                    <option value="0">📍 推荐路线</option>
+                    <option value="3">🚦 躲避拥堵</option>
+                    <option value="1">💰 避免收费</option>
+                    <option value="2">🛞 高速优先</option>
+                    <option value="4">🚦💰 躲避拥堵且避免收费</option>
+                    <option value="5">🚦🛞 躲避拥堵且高速优先</option>
+                    <option value="6">🚦🛞 躲避拥堵且不走高速</option>
+                </select>
+                <p class="hint">选择路线规划策略（仅对摩托车/汽车生效）</p>
+            </div>
+
             <div class="form-group">
                 <label>途经点（可选）</label>
                 <div id="waypointList"></div>
@@ -460,6 +475,7 @@
             const destination = document.getElementById('destination').value.trim();
             const waypoints = getWaypoints();
             const vehicleType = getSelectedVehicle();
+            const strategy = document.getElementById('strategy').value;
 
             if (!origin || !destination) {
                 showError('请输入起点和终点地址');
@@ -473,7 +489,7 @@
                 const response = await fetch(`${API_BASE}/api/route/book/preview`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ origin, destination, waypoints, return_via: waypoints, vehicle_type: vehicleType })
+                    body: JSON.stringify({ origin, destination, waypoints, return_via: waypoints, vehicle_type: vehicleType, strategy: parseInt(strategy) })
                 });
 
                 const result = await response.json();
@@ -497,6 +513,7 @@
             const destination = document.getElementById('destination').value.trim();
             const waypoints = getWaypoints();
             const vehicleType = getSelectedVehicle();
+            const strategy = document.getElementById('strategy').value;
 
             if (!origin || !destination) {
                 showError('请输入起点和终点地址');
@@ -509,7 +526,7 @@
                 const response = await fetch(`${API_BASE}/api/route/book`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ origin, destination, waypoints, return_via: waypoints, vehicle_type: vehicleType })
+                    body: JSON.stringify({ origin, destination, waypoints, return_via: waypoints, vehicle_type: vehicleType, strategy: parseInt(strategy) })
                 });
 
                 const result = await response.json();

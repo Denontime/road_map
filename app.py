@@ -37,6 +37,7 @@ def plan_route():
     origin = data.get('origin')
     destination = data.get('destination')
     waypoints = data.get('waypoints', [])
+    strategy = data.get('strategy', 10)
 
     if not origin or not destination:
         return jsonify({'error': '起点和终点不能为空'}), 400
@@ -57,7 +58,7 @@ def plan_route():
         if wp_data:
             waypoint_data.append(wp_data)
 
-    route_data = planner.plan_route(origin_data, dest_data, waypoint_data)
+    route_data = planner.plan_route(origin_data, dest_data, waypoint_data, strategy=strategy)
 
     return jsonify(route_data)
 
@@ -69,12 +70,13 @@ def generate_route_book():
     waypoints = data.get('waypoints', [])
     return_via = data.get('return_via', [])
     vehicle_type = data.get('vehicle_type', 'motorcycle')
+    strategy = data.get('strategy', 10)
 
     if not origin or not destination:
         return jsonify({'error': '起点和终点不能为空'}), 400
 
     planner = RoutePlanner(AMAP_KEY)
-    route_data = planner.generate_route_book_data(origin, destination, return_via, vehicle_type)
+    route_data = planner.generate_route_book_data(origin, destination, return_via, vehicle_type, strategy)
 
     if 'error' in route_data:
         return jsonify(route_data), 400
@@ -95,12 +97,13 @@ def preview_route_book():
     waypoints = data.get('waypoints', [])
     return_via = data.get('return_via', [])
     vehicle_type = data.get('vehicle_type', 'motorcycle')
+    strategy = data.get('strategy', 10)
 
     if not origin or not destination:
         return jsonify({'error': '起点和终点不能为空'}), 400
 
     planner = RoutePlanner(AMAP_KEY)
-    route_data = planner.generate_route_book_data(origin, destination, return_via, vehicle_type)
+    route_data = planner.generate_route_book_data(origin, destination, return_via, vehicle_type, strategy)
 
     if 'error' in route_data:
         return jsonify(route_data), 400

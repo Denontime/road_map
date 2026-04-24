@@ -1,6 +1,20 @@
 import requests
 from typing import Dict, List, Optional, Any
 
+DRIVING_STRATEGIES = {
+    0: "推荐模式",
+    1: "避免收费",
+    2: "高速优先",
+    3: "躲避拥堵",
+    4: "避免收费且躲避拥堵",
+    5: "高速优先且躲避拥堵",
+    6: "躲避拥堵且不走高速",
+    7: "多策略（同时规划多种路线）",
+    8: "躲避拥堵且避免收费",
+    9: "躲避拥堵且高速优先",
+    10: "默认（综合最优）"
+}
+
 class DrivingRoute:
     def __init__(self, api_key: str):
         self.api_key = api_key
@@ -37,8 +51,8 @@ class DrivingRoute:
             parsed_steps.append({
                 "instruction": step.get("instruction", ""),
                 "road": step.get("road", ""),
-                "distance": step.get("distance", 0),
-                "duration": step.get("time", 0),
+                "distance": int(step.get("distance", 0)),
+                "duration": int(step.get("duration", 0)),
                 "action": step.get("action", ""),
                 "orientation": step.get("orientation", ""),
                 "polyline": step.get("polyline", "")
