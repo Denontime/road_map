@@ -36,7 +36,7 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             background: var(--bg-primary);
             min-height: 100vh;
-            padding: 20px;
+            padding: 40px 20px;
             transition: background 0.3s, color 0.3s;
         }
         .main-layout {
@@ -91,6 +91,7 @@
         .header p { opacity: 0.9; }
         .form-section {
             padding: 30px;
+            width: 795px;
         }
         .form-section .form-group {
             margin-bottom: 25px;
@@ -140,11 +141,13 @@
             overflow-x: auto;
             overflow-y: hidden;
             gap: 8px;
-            min-height: 50px;
-            max-height: 58px;
+            height: 50px;
             padding-bottom: 8px;
+            align-items: flex-start;
         }
         #goWaypointList::-webkit-scrollbar, #returnWaypointList::-webkit-scrollbar {
+            position: absolute;
+            bottom: 0;
             height: 8px;
         }
         #goWaypointList::-webkit-scrollbar-track, #returnWaypointList::-webkit-scrollbar-track {
@@ -167,6 +170,8 @@
             border-radius: 20px;
             padding: 4px 8px 4px 12px;
             flex-shrink: 0;
+            min-width: 150px;
+            height: 36px;
         }
         .waypoint-tag input {
             border: none;
@@ -191,13 +196,14 @@
         .add-waypoint {
             background: var(--bg-secondary);
             border: 2px dashed var(--accent-color);
-            padding: 15px;
+            padding: 8px 12px;
             border-radius: 8px;
             text-align: center;
             cursor: pointer;
             color: var(--accent-color);
             transition: all 0.3s;
             margin-top: 8px;
+            font-size: 13px;
         }
         .add-waypoint:hover {
             border-color: var(--accent-color);
@@ -352,13 +358,11 @@
                 <div class="form-group">
                     <label>起点地址</label>
                     <input type="text" id="origin" placeholder="例如：银川市吾悦广场">
-                    <p class="hint">输入骑行的出发点地址</p>
                 </div>
 
                 <div class="form-group">
                     <label>终点地址</label>
                     <input type="text" id="destination" placeholder="例如：贺兰山岩画">
-                    <p class="hint">输入骑行的目的地地址</p>
                 </div>
 
                 <div class="form-group">
@@ -386,7 +390,6 @@
                             </div>
                         </label>
                     </div>
-                    <p class="hint">选择出行方式</p>
                 </div>
 
                 <div class="form-group" id="strategyGroup">
@@ -401,7 +404,6 @@
                         <option value="5">🚦🛞 躲避拥堵且高速优先</option>
                         <option value="6">🚦🛞 躲避拥堵且不走高速</option>
                     </select>
-                    <p class="hint">选择路线规划策略（仅对摩托车/汽车生效）</p>
                 </div>
 
                 <div class="form-group">
@@ -418,7 +420,6 @@
                     <div class="add-waypoint" id="addReturnWaypoint" onclick="addWaypointField('returnWaypointList', 'addReturnWaypoint')">
                         + 添加途经点
                     </div>
-                    <p class="hint">返程经过的地点，例如：服务区、休息点</p>
                 </div>
 
                 <div class="btn-group">
