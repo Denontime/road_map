@@ -39,14 +39,27 @@
             padding: 20px;
             transition: background 0.3s, color 0.3s;
         }
-        .container {
-            max-width: 800px;
+        .main-layout {
+            display: flex;
+            gap: 20px;
+            max-width: 1400px;
             margin: 0 auto;
+        }
+        .left-panel {
+            flex: 6;
+            min-width: 600px;
+            max-width: 800px;
             background: var(--bg-secondary);
             border-radius: 16px;
             box-shadow: 0 20px 60px var(--shadow);
-            overflow: hidden;
+            overflow-x: auto;
             transition: background 0.3s;
+        }
+        .right-panel {
+            flex: 4;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
         }
         .header {
             background: linear-gradient(135deg, var(--accent-color) 0%, #6366f1 100%);
@@ -79,6 +92,19 @@
         .form-section {
             padding: 30px;
         }
+        .form-section .form-group {
+            margin-bottom: 25px;
+        }
+        .form-section .btn-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
         .form-group {
             margin-bottom: 25px;
         }
@@ -108,35 +134,70 @@
             color: var(--text-muted);
             margin-top: 5px;
         }
-        .waypoint-row {
+        #goWaypointList, #returnWaypointList {
             display: flex;
-            gap: 10px;
-            margin-bottom: 10px;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            overflow-y: hidden;
+            gap: 8px;
+            min-height: 50px;
+            max-height: 58px;
+            padding-bottom: 8px;
         }
-        .waypoint-row input {
-            flex: 1;
+        #goWaypointList::-webkit-scrollbar, #returnWaypointList::-webkit-scrollbar {
+            height: 8px;
         }
-        .waypoint-row button {
-            padding: 14px 20px;
-            background: #ef4444;
-            color: white;
+        #goWaypointList::-webkit-scrollbar-track, #returnWaypointList::-webkit-scrollbar-track {
+            background: var(--bg-tertiary);
+            border-radius: 4px;
+        }
+        #goWaypointList::-webkit-scrollbar-thumb, #returnWaypointList::-webkit-scrollbar-thumb {
+            background: var(--text-muted);
+            border-radius: 4px;
+        }
+        #goWaypointList::-webkit-scrollbar-thumb:hover, #returnWaypointList::-webkit-scrollbar-thumb:hover {
+            background: var(--text-secondary);
+        }
+        .waypoint-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 4px 8px 4px 12px;
+            flex-shrink: 0;
+        }
+        .waypoint-tag input {
             border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 18px;
+            background: transparent;
+            font-size: 13px;
+            color: var(--text-primary);
+            width: 140px;
+            outline: none;
         }
-        .waypoint-row button:hover {
-            background: #dc2626;
+        .waypoint-tag button {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 16px;
+            padding: 0;
+            line-height: 1;
+        }
+        .waypoint-tag button:hover {
+            color: #ef4444;
         }
         .add-waypoint {
-            background: var(--bg-tertiary);
-            border: 2px dashed var(--border-color);
+            background: var(--bg-secondary);
+            border: 2px dashed var(--accent-color);
             padding: 15px;
             border-radius: 8px;
             text-align: center;
             cursor: pointer;
-            color: var(--text-secondary);
+            color: var(--accent-color);
             transition: all 0.3s;
+            margin-top: 8px;
         }
         .add-waypoint:hover {
             border-color: var(--accent-color);
@@ -202,7 +263,7 @@
             padding: 30px;
             background: var(--bg-secondary);
         }
-        .result-section.show { display: block; }
+        .result-section.show { display: block !important; }
         .result-preview {
             background: var(--bg-tertiary);
             border-radius: 8px;
@@ -259,7 +320,7 @@
         }
         .history-item {
             background: var(--bg-secondary);
-            padding: 15px;
+            padding: 12px 15px;
             border-radius: 8px;
             display: flex;
             justify-content: space-between;
@@ -273,116 +334,121 @@
         }
         .history-item-name { font-weight: 600; color: var(--text-primary); }
         .history-item-date { font-size: 13px; color: var(--text-muted); }
+        .history-item .btn { padding: 6px 12px; font-size: 13px; flex: none; width: auto; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <button class="theme-toggle" id="themeToggle" title="切换主题">🌙</button>
-            <h1>🗺️ 路书生成器</h1>
-            <p>输入起点、终点和途经点，自动生成路书</p>
-        </div>
-
-        <div class="form-section">
-            <div class="error-msg" id="errorMsg"></div>
-
-            <div class="form-group">
-                <label>起点地址</label>
-                <input type="text" id="origin" placeholder="例如：银川市吾悦广场">
-                <p class="hint">输入骑行的出发点地址</p>
+    <div class="main-layout">
+        <div class="left-panel">
+            <div class="header">
+                <button class="theme-toggle" id="themeToggle" title="切换主题">🌙</button>
+                <h1>🗺️ 路书生成器</h1>
+                <p>输入起点、终点和途经点，自动生成路书</p>
             </div>
 
-            <div class="form-group">
-                <label>终点地址</label>
-                <input type="text" id="destination" placeholder="例如：贺兰山岩画">
-                <p class="hint">输入骑行的目的地地址</p>
-            </div>
+            <div class="form-section">
+                <div class="error-msg" id="errorMsg"></div>
 
-            <div class="form-group">
-                <label>交通工具</label>
-                <div style="display: flex; gap: 15px; margin-top: 10px;">
-                    <label class="vehicle-option selected" style="flex: 1; cursor: pointer;">
-                        <input type="radio" name="vehicle" value="motorcycle" checked style="display: none;">
-                        <div class="vehicle-card" style="padding: 20px; border: 2px solid var(--accent-color); border-radius: 8px; text-align: center; background: var(--accent-light);">
-                            <div style="font-size: 30px;">🏍️ 🚗</div>
-                            <div style="margin-top: 8px; font-weight: 600; color: var(--text-primary);">摩托车/汽车</div>
-                        </div>
-                    </label>
-                    <label class="vehicle-option" style="flex: 1; cursor: pointer;">
-                        <input type="radio" name="vehicle" value="bicycle" style="display: none;">
-                        <div class="vehicle-card" style="padding: 20px; border: 2px solid var(--border-color); border-radius: 8px; text-align: center; background: var(--bg-secondary);">
-                            <div style="font-size: 30px;">🚴</div>
-                            <div style="margin-top: 8px; font-weight: 600; color: var(--text-primary);">自行车</div>
-                        </div>
-                    </label>
-                    <label class="vehicle-option" style="flex: 1; cursor: pointer;">
-                        <input type="radio" name="vehicle" value="walking" style="display: none;">
-                        <div class="vehicle-card" style="padding: 20px; border: 2px solid var(--border-color); border-radius: 8px; text-align: center; background: var(--bg-secondary);">
-                            <div style="font-size: 30px;">🚶</div>
-                            <div style="margin-top: 8px; font-weight: 600; color: var(--text-primary);">步行</div>
-                        </div>
-                    </label>
+                <div class="form-group">
+                    <label>起点地址</label>
+                    <input type="text" id="origin" placeholder="例如：银川市吾悦广场">
+                    <p class="hint">输入骑行的出发点地址</p>
                 </div>
-                <p class="hint">选择出行方式</p>
+
+                <div class="form-group">
+                    <label>终点地址</label>
+                    <input type="text" id="destination" placeholder="例如：贺兰山岩画">
+                    <p class="hint">输入骑行的目的地地址</p>
+                </div>
+
+                <div class="form-group">
+                    <label>交通工具</label>
+                    <div style="display: flex; gap: 15px; margin-top: 10px;">
+                        <label class="vehicle-option selected" style="flex: 1; cursor: pointer;">
+                            <input type="radio" name="vehicle" value="motorcycle" checked style="display: none;">
+                            <div class="vehicle-card" style="padding: 20px; border: 2px solid var(--accent-color); border-radius: 8px; text-align: center; background: var(--accent-light);">
+                                <div style="font-size: 30px;">🏍️ 🚗</div>
+                                <div style="margin-top: 8px; font-weight: 600; color: var(--text-primary);">摩托车/汽车</div>
+                            </div>
+                        </label>
+                        <label class="vehicle-option" style="flex: 1; cursor: pointer;">
+                            <input type="radio" name="vehicle" value="bicycle" style="display: none;">
+                            <div class="vehicle-card" style="padding: 20px; border: 2px solid var(--border-color); border-radius: 8px; text-align: center; background: var(--bg-secondary);">
+                                <div style="font-size: 30px;">🚴</div>
+                                <div style="margin-top: 8px; font-weight: 600; color: var(--text-primary);">自行车</div>
+                            </div>
+                        </label>
+                        <label class="vehicle-option" style="flex: 1; cursor: pointer;">
+                            <input type="radio" name="vehicle" value="walking" style="display: none;">
+                            <div class="vehicle-card" style="padding: 20px; border: 2px solid var(--border-color); border-radius: 8px; text-align: center; background: var(--bg-secondary);">
+                                <div style="font-size: 30px;">🚶</div>
+                                <div style="margin-top: 8px; font-weight: 600; color: var(--text-primary);">步行</div>
+                            </div>
+                        </label>
+                    </div>
+                    <p class="hint">选择出行方式</p>
+                </div>
+
+                <div class="form-group" id="strategyGroup">
+                    <label>路线偏好</label>
+                    <select id="strategy" style="width: 100%; padding: 14px 40px 14px 16px; border: 2px solid var(--border-color); border-radius: 8px; font-size: 16px; background: var(--bg-secondary); color: var(--text-primary); cursor: pointer; appearance: none; -webkit-appearance: none; background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2364748b' d='M6 8L1 3h10z'/%3E%3C/svg%3E&quot;); background-repeat: no-repeat; background-position: right 16px center;">
+                        <option value="10">🛣️ 综合最优（默认）</option>
+                        <option value="0">📍 推荐路线</option>
+                        <option value="3">🚦 躲避拥堵</option>
+                        <option value="1">💰 避免收费</option>
+                        <option value="2">🛞 高速优先</option>
+                        <option value="4">🚦💰 躲避拥堵且避免收费</option>
+                        <option value="5">🚦🛞 躲避拥堵且高速优先</option>
+                        <option value="6">🚦🛞 躲避拥堵且不走高速</option>
+                    </select>
+                    <p class="hint">选择路线规划策略（仅对摩托车/汽车生效）</p>
+                </div>
+
+                <div class="form-group">
+                    <label>去程途经点（可选）</label>
+                    <div id="goWaypointList"></div>
+                    <div class="add-waypoint" id="addGoWaypoint" onclick="addWaypointField('goWaypointList', 'addGoWaypoint')">
+                        + 添加途经点
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>返程途经点（可选）</label>
+                    <div id="returnWaypointList"></div>
+                    <div class="add-waypoint" id="addReturnWaypoint" onclick="addWaypointField('returnWaypointList', 'addReturnWaypoint')">
+                        + 添加途经点
+                    </div>
+                    <p class="hint">返程经过的地点，例如：服务区、休息点</p>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-secondary" onclick="previewRoute()">👁️ 预览路书</button>
+                    <button class="btn btn-primary" onclick="generateRouteBook()">📚 生成路书</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="right-panel">
+            <div class="loading" id="loading" style="background: var(--bg-secondary); border-radius: 16px; padding: 40px; box-shadow: 0 20px 60px var(--shadow);">
+                <div class="spinner"></div>
+                <p style="text-align: center; color: var(--text-secondary);">正在规划路线，请稍候...</p>
             </div>
 
-            <div class="form-group" id="strategyGroup">
-                <label>路线偏好</label>
-                <select id="strategy" style="width: 100%; padding: 14px 40px 14px 16px; border: 2px solid var(--border-color); border-radius: 8px; font-size: 16px; background: var(--bg-secondary); color: var(--text-primary); cursor: pointer; appearance: none; -webkit-appearance: none; background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2364748b' d='M6 8L1 3h10z'/%3E%3C/svg%3E&quot;); background-repeat: no-repeat; background-position: right 16px center;">
-                    <option value="10">🛣️ 综合最优（默认）</option>
-                    <option value="0">📍 推荐路线</option>
-                    <option value="3">🚦 躲避拥堵</option>
-                    <option value="1">💰 避免收费</option>
-                    <option value="2">🛞 高速优先</option>
-                    <option value="4">🚦💰 躲避拥堵且避免收费</option>
-                    <option value="5">🚦🛞 躲避拥堵且高速优先</option>
-                    <option value="6">🚦🛞 躲避拥堵且不走高速</option>
-                </select>
-                <p class="hint">选择路线规划策略（仅对摩托车/汽车生效）</p>
-            </div>
-
-            <div class="form-group">
-                <label>去程途经点（可选）</label>
-                <div id="goWaypointList"></div>
-                <div class="add-waypoint" id="addGoWaypoint" onclick="addWaypointField('goWaypointList', 'addGoWaypoint')">
-                    + 添加途经点
+            <div class="result-section" id="resultSection" style="background: var(--bg-secondary); border-radius: 16px; box-shadow: 0 20px 60px var(--shadow); padding: 30px; display: none;">
+                <h3 style="margin-bottom: 15px; color: var(--text-primary);">📊 路线规划结果</h3>
+                <div class="result-stats" id="resultStats"></div>
+                <div class="result-preview" id="resultPreview" style="max-height: 400px; overflow-y: auto;"></div>
+                <div class="result-actions" style="margin-top: 20px;">
+                    <button class="btn btn-primary" onclick="downloadBook()">📥 下载路书</button>
+                    <button class="btn btn-secondary" onclick="openInAmap()">📍 在高德地图中查看</button>
                 </div>
             </div>
 
-            <div class="form-group">
-                <label>返程途经点（可选）</label>
-                <div id="returnWaypointList"></div>
-                <div class="add-waypoint" id="addReturnWaypoint" onclick="addWaypointField('returnWaypointList', 'addReturnWaypoint')">
-                    + 添加途经点
+            <div class="history-section" id="historyPanel" style="background: var(--bg-secondary); border-radius: 16px; box-shadow: 0 20px 60px var(--shadow); padding: 30px; flex: 1;">
+                <h3>📁 已生成的路书</h3>
+                <div class="history-list" id="historyList" style="margin-top: 15px;">
+                    <p style="color: var(--text-muted); text-align: center; padding: 20px;">暂无已生成的路书</p>
                 </div>
-                <p class="hint">返程经过的地点，例如：服务区、休息点</p>
-            </div>
-
-            <div class="btn-group">
-                <button class="btn btn-secondary" onclick="previewRoute()">👁️ 预览路书</button>
-                <button class="btn btn-primary" onclick="generateRouteBook()">📚 生成路书</button>
-            </div>
-        </div>
-
-        <div class="loading" id="loading">
-            <div class="spinner"></div>
-            <p>正在规划路线，请稍候...</p>
-        </div>
-
-        <div class="result-section" id="resultSection">
-            <h3 style="margin-bottom: 15px; color: var(--text-primary);">📊 路线规划结果</h3>
-            <div class="result-stats" id="resultStats"></div>
-            <div class="result-preview" id="resultPreview"></div>
-            <div class="result-actions">
-                <button class="btn btn-primary" onclick="downloadBook()">📥 下载路书</button>
-                <button class="btn btn-secondary" onclick="openInAmap()">📍 在高德地图中查看</button>
-            </div>
-        </div>
-
-        <div class="history-section">
-            <h3>📁 已生成的路书</h3>
-            <div class="history-list" id="historyList">
-                <p style="color: var(--text-muted); text-align: center; padding: 20px;">暂无已生成的路书</p>
             </div>
         </div>
     </div>
@@ -416,14 +482,15 @@
         function addWaypointField(listId, btnId) {
             waypointCount++;
             const container = document.getElementById(listId);
-            const row = document.createElement('div');
-            row.className = 'waypoint-row';
-            row.id = `waypoint-${waypointCount}`;
-            row.innerHTML = `
-                <input type="text" id="waypoint-input-${waypointCount}" placeholder="途经点地址">
+            const tag = document.createElement('div');
+            tag.className = 'waypoint-tag';
+            tag.id = `waypoint-${waypointCount}`;
+            tag.innerHTML = `
+                <input type="text" id="waypoint-input-${waypointCount}" placeholder="途经点">
                 <button type="button" onclick="removeWaypoint(${waypointCount}, '${listId}')">×</button>
             `;
-            container.appendChild(row);
+            container.appendChild(tag);
+            document.getElementById(`waypoint-input-${waypointCount}`).focus();
         }
 
         function removeWaypoint(id, listId) {
@@ -435,7 +502,7 @@
             const waypoints = [];
             const container = document.getElementById(listId);
             if (container) {
-                container.querySelectorAll('.waypoint-row input').forEach(input => {
+                container.querySelectorAll('.waypoint-tag input').forEach(input => {
                     if (input.value.trim()) {
                         waypoints.push(input.value.trim());
                     }
@@ -621,7 +688,7 @@
                         <div>
                             <div class="history-item-name">${item.name}</div>
                         </div>
-                        <button class="btn btn-secondary" style="padding: 8px 16px; font-size: 14px;">查看</button>
+                        <button class="btn btn-secondary">查看</button>
                     </div>
                 `).join('');
             } catch (err) {
